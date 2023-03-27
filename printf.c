@@ -4,6 +4,7 @@ int _printf(const char *format, ...)
 	char *str;
 	char c;
 	int i;
+	int num;
 	int count = 0;
 	va_list args;
 
@@ -33,13 +34,30 @@ int _printf(const char *format, ...)
 				}
 				break;
 				}
-			case '%':
+				case 'd':
+				case 'i':
+				num = va_arg(args, int);
+					if (num < 0)
+					{
+					putchar('-');
+					count++;
+					num = -num;
+					}
+					do
+					{
+					putchar(num % 10 + '0');
+					count++;
+					num /= 10;
+					}
+					while (num > 0);
+				break;
+				case '%':
 				{
 				putchar('%');
 				count++;
 				break;
 				}
-			default:
+				default:
 				{
 				putchar('%');
 				putchar(format[i]);
